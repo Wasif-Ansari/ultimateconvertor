@@ -1,6 +1,22 @@
 # Ultimate File Converter 🚀
 
-A comprehensive Next.js 14 file converter supporting **49+ conversion tools** using only npm packages - no system dependencies required!
+**Developed by [W Software Solutions](https://github.com/Wasif-Ansari)**
+
+![W Software Solutions](public/W-logo.jpg)
+
+A comprehensive, professional-grade file conversion web application supporting **120+ conversion tools** across multiple categories including images, documents, videos, audio, spreadsheets, presentations, archives, and OCR.
+
+---
+
+## 🏢 About W Software Solutions
+
+**W Software Solutions** is a leading software development company specializing in innovative web applications and digital transformation solutions. Our mission is to simplify complex technical tasks and make them accessible to everyone through cutting-edge technology and user-friendly interfaces.
+
+### Our Products
+- **Ultimate File Converter** - Professional file conversion service with 120+ tools
+- More innovative solutions coming soon...
+
+---
 
 ## ✨ Features
 
@@ -533,12 +549,33 @@ MIT| WAV → MP3 | `ffmpeg` | Audio |
 
 
 
-MIT## Roadmap ideas
-
+## Roadmap ideas
 
 - S3 + signed URL storage adapters
 - Webhooks / email notifications
 - Usage analytics dashboard
 - Multi-tenant billing and metering
+
+---
+
+## 📧 Contact
+
+**W Software Solutions**
+- GitHub: [@Wasif-Ansari](https://github.com/Wasif-Ansari)
+- Repository: [ultimateconvertor](https://github.com/Wasif-Ansari/ultimateconvertor)
+- Email: contact@wsoftwaresolutions.com
+- Support: support@wsoftwaresolutions.com
+
+---
+
+## 📄 License
+
+© 2025 W Software Solutions. All rights reserved.
+
+This software is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited without express written permission from W Software Solutions.
+
+---
+
+**Made with ❤️ by W Software Solutions**
 
 Enjoy converting!

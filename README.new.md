@@ -1,9 +1,21 @@
 # Ultimate File Converter 🚀
 
-A comprehensive Next.js 14 file converter supporting **120+ conversion tools** - the most complete file converter available!
+**Developed by [W Software Solutions](https://github.com/Wasif-Ansari)**
+
+![W Software Solutions](public/W-logo.jpg)
+
+A comprehensive, professional-grade file conversion web application supporting **120+ conversion tools** - the most complete file converter available!
+
+---
+
+## 🏢 About W Software Solutions
+
+**W Software Solutions** is a leading software development company specializing in innovative web applications and digital transformation solutions. Our mission is to simplify complex technical tasks and make them accessible to everyone.
+
+---
 
 ## ✨ Features
-
+make 
 - 🖼️ **17 Image conversions**: JPG, PNG, WEBP, TIFF, AVIF - all formats supported
 - 📄 **19 Document conversions**: DOCX↔PDF, DOCX↔ODT, DOCX↔RTF, PDF↔DOCX, Markdown, HTML
 - 📊 **9 Spreadsheet conversions**: XLSX, CSV, JSON, HTML
@@ -312,20 +324,7 @@ git push
 
 **For video/audio conversion, use Render, Railway, or Fly.io.**
 
-## 📝 License
-
-MIT License - feel free to use this project for personal or commercial purposes!
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Add new converters
-- Improve UI/UX
-- Fix bugs
-- Add tests
-- Improve documentation
-
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 Built with:
 - [Next.js](https://nextjs.org/)
@@ -334,7 +333,29 @@ Built with:
 - [PptxGenJS](https://gitbrent.github.io/PptxGenJS/)
 - [SheetJS](https://sheetjs.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [FFmpeg](https://ffmpeg.org/)
+- [Tesseract.js](https://tesseract.projectnaptha.com/)
 
 ---
 
-Made with ❤️ using Next.js 14 and TypeScript
+## 📧 Contact
+
+**W Software Solutions**
+- GitHub: [@Wasif-Ansari](https://github.com/Wasif-Ansari)
+- Repository: [ultimateconvertor](https://github.com/Wasif-Ansari/ultimateconvertor)
+- Email: contact@wsoftwaresolutions.com
+- Support: support@wsoftwaresolutions.com
+
+---
+
+## 📄 License
+
+© 2025 W Software Solutions. All rights reserved.
+
+This software is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited without express written permission from W Software Solutions.
+
+---
+
+**Made with ❤️ by W Software Solutions**
+
+Your trusted partner in digital transformation.
