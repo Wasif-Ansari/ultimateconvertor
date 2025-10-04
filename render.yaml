@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ultimate-file-converter
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: UPLOADS_DIR
+        value: /tmp/uploads
+      - key: NEXT_PUBLIC_BASE_URL
+        generateValue: true
