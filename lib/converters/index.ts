@@ -24,7 +24,8 @@ import {
 import {
   convertPdfToText, convertPdfToJson, optimizePdf,
   convertImageToPdf as convertImageToPdfOld, getPdfInfo,
-  convertPdfToHtml, splitPdfPages
+  convertPdfToHtml, splitPdfPages,
+  convertHtmlToPdf as convertHtmlToPdfBasic
 } from "@/lib/converters/pdf";
 import {
   convertXlsxToCsv, convertXlsxToTxt, convertXlsxToHtml, convertXlsxToJson,
@@ -124,6 +125,7 @@ const registry: Record<string, ConverterHandler> = {
   mdToDocx: convertMdToDocx,
   // mdToPdf: convertMdToPdf, // Requires Puppeteer
   mdToRtf: convertMdToRtf,
+  htmlToPdf: convertHtmlToPdfBasic,
   htmlToDocx: convertHtmlToDocx,
   htmlToRtf: convertHtmlToRtf,
   // latexToPdf: convertLatexToPdf, // Requires pdflatex

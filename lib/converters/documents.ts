@@ -1,10 +1,20 @@
 import path from "path";
 import { readFile, writeFile } from "fs/promises";
+import { createWriteStream } from "fs";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import mammoth from "mammoth";
 import { marked } from "marked";
 import { JSDOM } from "jsdom";
 import Tesseract from "tesseract.js";
+import PDFParser from "pdf2json";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  HeadingLevel,
+  AlignmentType,
+} from "docx";
 import type { ConversionJobData } from "@/lib/jobs";
 
 // DOCX to other formats
@@ -332,20 +342,95 @@ export async function convertPdfToDocx(job: ConversionJobData) {
   const targetPath = path.join(path.dirname(job.sourcePath), job.targetFilename);
   const buffer = await readFile(job.sourcePath);
   const pdfDoc = await PDFDocument.load(new Uint8Array(buffer));
-  
-  const pages = pdfDoc.getPages();
-  const text = `PDF Document Conversion\n\nThis PDF has ${pages.length} pages.\nNote: Full text extraction from PDF requires pdf-parse or similar libraries.\n\nFor best results, deploy to Render where full PDF text extraction is available.`;
-  
-  const docxContent = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
-  <w:body>
-    ${text.split('\n').map(para => 
-      `<w:p><w:r><w:t>${para}</w:t></w:r></w:p>`
-    ).join('\n')}
-  </w:body>
-</w:document>`;
-  
-  await writeFile(targetPath, docxContent, 'utf-8');
+
+  // Extract text using pdf2json (best-effort). Fallback to metadata-only if parsing fails.
+  const extractedText: string = await new Promise((resolve) => {
+    try {
+      const parser = new PDFParser();
+      let text = "";
+
+      parser.on("pdfParser_dataError", () => {
+        resolve("");
+      });
+
+      parser.on("pdfParser_dataReady", (pdfData: any) => {
+        if (pdfData.Pages && Array.isArray(pdfData.Pages)) {
+          pdfData.Pages.forEach((page: any, idx: number) => {
+            text += `\n${"=".repeat(60)}\nPage ${idx + 1}\n${"=".repeat(60)}\n`;
+            if (page.Texts && Array.isArray(page.Texts)) {
+              page.Texts.forEach((t: any) => {
+                if (t.R && Array.isArray(t.R)) {
+                  t.R.forEach((r: any) => {
+                    if (r.T) text += decodeURIComponent(r.T) + " ";
+                  });
+                }
+              });
+              text += "\n\n";
+            }
+          });
+        }
+        resolve(text.trim());
+      });
+
+      parser.parseBuffer(buffer);
+    } catch {
+      resolve("");
+    }
+  });
+
+  // Build a proper DOCX using docx
+  const title = pdfDoc.getTitle() || "PDF Document";
+  const sections: { children: Paragraph[] }[] = [];
+
+  const paras: Paragraph[] = [];
+  paras.push(
+    new Paragraph({
+      text: title,
+      heading: HeadingLevel.TITLE,
+      alignment: AlignmentType.CENTER,
+    })
+  );
+  paras.push(
+    new Paragraph({
+      children: [
+        new TextRun({ text: `Author: ${pdfDoc.getAuthor() || "Unknown"}` }),
+        new TextRun({ text: "    " }),
+        new TextRun({ text: `Pages: ${pdfDoc.getPageCount()}` }),
+      ],
+    })
+  );
+  paras.push(
+    new Paragraph({
+      text: `Created: ${pdfDoc.getCreationDate()?.toString() || "Unknown"}`,
+    })
+  );
+  paras.push(new Paragraph({ text: "" }));
+
+  if (extractedText) {
+    const blocks = extractedText.split(/\n\n+/).map((s) => s.trim()).filter(Boolean);
+    for (const block of blocks) {
+      paras.push(new Paragraph({ text: block }));
+    }
+  } else {
+    paras.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text:
+              "Note: Could not extract text from this PDF (it may be scanned or complex). Metadata is included above.",
+            italics: true,
+          }),
+        ],
+      })
+    );
+  }
+
+  sections.push({ children: paras });
+
+  const doc = new Document({ sections });
+  const bufferOut = await Packer.toBuffer(doc);
+  await writeFile(targetPath, new Uint8Array(bufferOut));
+
   return { outputPath: targetPath };
 }
 
